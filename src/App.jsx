@@ -5,6 +5,7 @@ import './App.css';
 import Box from './components/Box';
 import GsapBox from './components/gsapBoxAndCircle/GsapBox';
 import GsapCircle from './components/gsapBoxAndCircle/GsapCircle';
+import GsapClickContainer from "./components/gsapClick/gsapClickContainer";
 
 function App ()
 {
@@ -24,9 +25,10 @@ function App ()
       opacity: 0,
       rotate: 360,
       duration: 1,
-      delay: 1
+      delay: 1,
+      scale:0
     } );
-  } );
+  } ,{scope: "#gsapScope"});
 
   return (
     <main className="flex flex-col gap-30 py-30">
@@ -36,9 +38,9 @@ function App ()
       <div>
 
 
-        <div className="flex items-center justify-evenly">
+        <div className="flex items-center justify-evenly pb-50">
 
-          <div className="flex flex-col border-2 border-green-500 rounded-3xl p-10">
+          <div id="gsapScope" className="flex flex-col border-2 border-green-500 rounded-3xl p-10">
             <GsapCircle />
             <GsapBox ref={gsapRef}/>
           </div>
@@ -48,6 +50,8 @@ function App ()
             <GsapBox/>
           </div>
         </div>
+
+        <GsapClickContainer/>
       </div>
     </main>
   );
