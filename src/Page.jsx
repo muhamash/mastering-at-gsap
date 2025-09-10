@@ -1,9 +1,11 @@
+import { Outlet } from 'react-router';
+import BaseLayouts from "./layouts/BaseLayouts";
 
 const Page = () => {
     return (
-        <div>
-            gasap
-        </div>
+        <BaseLayouts>
+            <Outlet/>
+        </BaseLayouts>
     );
 };
 
