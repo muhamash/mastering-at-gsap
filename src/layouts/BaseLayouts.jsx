@@ -1,12 +1,12 @@
-import StickyNavbar from "./Nav";
+import PageTransition from "./PageTransitionComponent";
 
 export default function BaseLayouts({children}) {
     return (
-        <div className="min-h-screen flex flex-col">
-            <StickyNavbar />
-            <div className="grow-1">
-                { children }
-            </div>
+        <div className="min-h-screen flex flex-col overflow-x-hidden">
+
+            <PageTransition>
+                {children}
+            </PageTransition>
 
             {/* footer?? */}
         </div>

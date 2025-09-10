@@ -4,8 +4,8 @@ import { RouterProvider } from 'react-router'
 import './index.css'
 import { appRoute } from './routes'
 
-createRoot(document.getElementById('root')).render(
+createRoot( document.getElementById( 'root' ) ).render(
   <StrictMode>
-    <RouterProvider router={appRoute}/>
+    <RouterProvider router={ appRoute } />
   </StrictMode>,
-)
+);
