@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { useCallback, useContext, useRef } from 'react'
@@ -35,6 +36,7 @@ const FullScreenNav = () => {
             visibility: 'visible'
         })
         
+        // Fix: Set initial state for stairing elements
         gsap.set('.stairing', { 
             height: 0,
             transformOrigin: 'bottom'
@@ -49,28 +51,29 @@ const FullScreenNav = () => {
         
         gsap.set('.navlink', { opacity: 0 })
 
-        // Opening animation
+        // Opening animation - stairing effect
         tl.to('.stairing', {
             height: '100%',
-            duration: 0.6,
-            stagger: {
-                amount: 0.3,
-                from: "start"
-            }
-        })
-        .to('.link', {
-            opacity: 1,
-            rotateX: 0,
             duration: 0.5,
             stagger: {
                 amount: 0.3,
                 from: "start"
+            },
+            ease: "power2.out"
+        })
+        .to('.link', {
+            opacity: 1,
+            rotateX: 0,
+            duration: 0.6,
+            stagger: {
+                amount: 0.2,
+                from: "start"
             }
-        }, "-=0.3")
+        }, "-=0.4")
         .to('.navlink', {
             opacity: 1,
             duration: 0.3
-        }, "-=0.4")
+        }, "-=0.5")
 
         timelineRef.current = tl
         return tl
@@ -101,11 +104,12 @@ const FullScreenNav = () => {
         }, "-=0.1")
         .to('.stairing', {
             height: 0,
-            duration: 0.5,
+            duration: 0.1,
             stagger: {
-                amount: 0.15,
+                amount: 0.2,
                 from: "end"
-            }
+            },
+            ease: "power2.in"
         }, "-=0.3")
         .set('.fullscreennav', {
             display: 'none',
@@ -116,23 +120,27 @@ const FullScreenNav = () => {
     }, [])
 
     // gsap
-    useGSAP(() => {
-        if (navOpen) {
+    useGSAP( () =>
+    {
+        if ( navOpen )
+        {
             const timeline = createTimeline()
             timeline.play()
-        } else {
+        } else
+        {
             reverseAnimation()
         }
 
         // Cleanup function
-        return () => {
-            if (timelineRef.current) {
+        return () =>
+        {
+            if ( timelineRef.current )
+            {
                 timelineRef.current.kill()
             }
         }
-    }, [navOpen, createTimeline, reverseAnimation])
+    }, [ navOpen, createTimeline, reverseAnimation ] );
 
-    // Performance: Add will-change CSS for animated elements
     const animatedStyles = {
         // Force hardware acceleration
         transform: 'translateZ(0)', 
@@ -143,23 +151,27 @@ const FullScreenNav = () => {
         <div 
             ref={fullScreenRef} 
             id='fullscreennav' 
-            className='fullscreennav invisible text-white overflow-hidden h-screen w-full z-50 absolute'
+            className='fullscreennav invisible text-white overflow-hidden h-screen w-full z-50 fixed top-0 left-0'
             style={animatedStyles}
         >
-            <div className='h-screen w-full fixed'>
+            {/* Fixed stairing container */}
+            <div className='h-screen w-full absolute top-0 left-0'>
                 <div className='h-full w-full flex'>
-                    {/* Using map for better performance and maintainability */}
+                    {/* Fixed stairing elements */}
                     {[...Array(5)].map((_, index) => (
                         <div 
                             key={index}
-                            className='stairing h-0 w-1/5 bg-black' 
-                            style={animatedStyles}
+                            className='stairing bg-black h-0 flex-1'
+                            style={{
+                                ...animatedStyles,
+                                transformOrigin: 'bottom'
+                            }}
                         />
                     ))}
                 </div>
             </div>
             
-            <div ref={fullNavLinksRef} className='relative'>
+            <div ref={fullNavLinksRef} className='relative z-10'>
                 <div className="navlink flex w-full justify-between lg:p-5 p-2 items-start opacity-0">
                     <div className=''>
                         <div className='lg:w-36 w-24'>
@@ -180,7 +192,7 @@ const FullScreenNav = () => {
                     </div>
                 </div>
                 
-                <div className='py-36'>
+                <div className='pb-50 h-screen pt-10'>
                     {/* Navigation Items */}
                     {[
                         { title: 'Projects', color: '#50e0fd' },
@@ -192,7 +204,7 @@ const FullScreenNav = () => {
                             key={item.title}
                             title={item.title}
                             color={item.color}
-                            isLast={index === 3}
+                            handleClose={handleClose}
                             style={animatedStyles}
                         />
                     ))}
@@ -201,6 +213,5 @@ const FullScreenNav = () => {
         </div>
     )
 }
-
 
 export default FullScreenNav

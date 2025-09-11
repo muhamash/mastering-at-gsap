@@ -20,10 +20,12 @@
 .moveLink{
     opacity: 0;
     transition: all ease 0.3s;
+    border: 0 !important
 }
 
 .link:hover .moveLink{
     opacity: 1;
+    border: 0 !important
 }
 
 @keyframes moveAnimation {
@@ -33,4 +35,22 @@
     to{
         transform: translateX(-100%);
     }
+}
+
+@keyframes scroll-x {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0; }
+  50% { transform: translateY(-20px) rotate(180deg); opacity: 1; }
+}
+
+.animate-scroll-x {
+  animation: scroll-x 20s linear infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
 }
