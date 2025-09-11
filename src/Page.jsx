@@ -1,11 +1,14 @@
 import { Outlet } from 'react-router';
+import NavContext from './context/NavContext';
 import BaseLayouts from "./layouts/BaseLayouts";
 
 const Page = () => {
     return (
-        <BaseLayouts>
-            <Outlet/>
-        </BaseLayouts>
+        <NavContext>
+            <BaseLayouts>
+                <Outlet />
+            </BaseLayouts>
+        </NavContext>
     );
 };
 

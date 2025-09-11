@@ -18,7 +18,7 @@ export default function PageTransition({children}) {
       defaults: { ease: "power2.inOut" },
       onComplete: () =>
       {
-        // 🔑 Refresh ScrollTrigger after DOM is stable
+        // Refresh ScrollTrigger after DOM is stable
         requestAnimationFrame( () => ScrollTrigger.refresh() );
       },
     } );
@@ -29,21 +29,21 @@ export default function PageTransition({children}) {
     //  Animate stairs in (height from 0 → full)
     tl.from( ".stair", {
       height: 0,
-      duration: 0.8,
+      duration: 0.9,
       ease: "power2.out",
       stagger: {
-        amount: 0.3,
+        amount: 0.5,
         from: "start",
       },
     } );
 
-    // Animate stairs out (move up)
+    // Animate stairs out 
     tl.to( ".stair", {
-      y: "-100%",
+      y: "100%",
       duration: 0.8,
       stagger: {
         amount: -0.3,
-        from: "end",
+        from: "start",
       },
       ease: "power2.inOut",
     } );
@@ -56,15 +56,16 @@ export default function PageTransition({children}) {
 
     gsap.from( pageRef.current, {
       opacity: 0,
-      delay: 1.5,
-      scale: 2,
+      delay: 2,
+      scale: 3,
       onComplete: () => ScrollTrigger.refresh(),
       clearProps: "all",
     } );
 
+    // cleanup timeline
     return () =>
     {
-      tl.kill(); // cleanup timeline
+      tl.kill(); 
     };
     
   }, [ currentPath ] );

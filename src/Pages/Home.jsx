@@ -9,7 +9,7 @@ export default function Home() {
                 <Video/>
             </div>
             
-            <div className='h-screen relative pb-5 overflow-hidden flex flex-col justify-between'>
+            <div className='h-full relative pb-5 overflow-hidden flex flex-col justify-between'>
                 <HomeHeroText />
                 <HomeBottomText/>
             </div>
