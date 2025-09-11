@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router';
 
-export const NavItem = ({ title, color, handleClose, style }) => {
+export const NavItem = ( { title, color, handleClose, style } ) =>
+{
     const navigate = useNavigate();
 
     return (
@@ -90,9 +91,8 @@ export const NavItem = ({ title, color, handleClose, style }) => {
                 />
             </div>
 
-            {/* Original Hover Effect */ }
-            <div className="moveLink absolute z-20 text-black flex top-0 
-             bg-white/10 backdrop-blur-lg rounded-xl shadow-lg" >
+            {/* Original Hover Effect - Unchanged */ }
+            <div className='moveLink absolute text-black flex top-0' style={ { backgroundColor: color } }>
                 { [ 1, 2 ].map( ( duplicateIndex ) => (
                     <div key={ duplicateIndex } className='moveX flex items-center'>
                         <h2 className='whitespace-nowrap font-[font2] lg:text-[8vw] text-5xl text-center lg:leading-[0.8] lg:pt-10 pt-4 uppercase'>
@@ -117,5 +117,5 @@ export const NavItem = ({ title, color, handleClose, style }) => {
                 ) ) }
             </div>
         </div>
-    );
+    )
 };
