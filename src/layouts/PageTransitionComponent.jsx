@@ -15,19 +15,21 @@ export default function PageTransition({children}) {
   useGSAP( () =>
   {
     const tl = gsap.timeline( {
+      defaults: { ease: "power2.inOut" },
       onComplete: () =>
       {
-        ScrollTrigger.refresh();
-      }
+        // 🔑 Refresh ScrollTrigger after DOM is stable
+        requestAnimationFrame( () => ScrollTrigger.refresh() );
+      },
     } );
 
-    // 1️⃣ Make overlay visible immediately
+    // Make overlay visible immediately
     tl.set( pageTransitionRef.current, { display: "flex", } );
 
-    // 2️⃣ Animate stairs in (height from 0 → full)
+    //  Animate stairs in (height from 0 → full)
     tl.from( ".stair", {
       height: 0,
-      duration: 1,
+      duration: 0.8,
       ease: "power2.out",
       stagger: {
         amount: 0.3,
@@ -35,10 +37,10 @@ export default function PageTransition({children}) {
       },
     } );
 
-    // 3️⃣ Animate stairs out (move up)
+    // Animate stairs out (move up)
     tl.to( ".stair", {
       y: "-100%",
-      duration: 1,
+      duration: 0.8,
       stagger: {
         amount: -0.3,
         from: "end",
@@ -46,10 +48,10 @@ export default function PageTransition({children}) {
       ease: "power2.inOut",
     } );
 
-    // 4️⃣ Hide overlay
+    //  Hide overlay
     tl.set( pageTransitionRef.current, { display: "none" } );
 
-    // 5️⃣ Reset stairs for next transition
+    // Reset stairs for next transition
     tl.set( ".stair", { y: "0%", height: "100%" } );
 
     gsap.from( pageRef.current, {
@@ -57,7 +59,13 @@ export default function PageTransition({children}) {
       delay: 1.5,
       scale: 2,
       onComplete: () => ScrollTrigger.refresh(),
+      clearProps: "all",
     } );
+
+    return () =>
+    {
+      tl.kill(); // cleanup timeline
+    };
     
   }, [ currentPath ] );
 
