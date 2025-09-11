@@ -5,7 +5,7 @@ import Video from "../components/pages/home/Video";
 export default function Home() {
     return (
         <div className="text-white">
-            <div className='fixed h-screen'>
+            <div className='fixed h-screen w-screen'>
                 <Video/>
             </div>
             
