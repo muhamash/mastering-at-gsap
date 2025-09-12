@@ -4,6 +4,7 @@ import Page from "../Page";
 import Agency from "../Pages/Agency";
 import Home from "../Pages/Home";
 import Projects from "../Pages/Projects";
+import ScrollReavel from "../Pages/ScrollReavel";
 
 export const appRoute = createBrowserRouter( [
     {
@@ -21,6 +22,10 @@ export const appRoute = createBrowserRouter( [
             {
                 path: '/projects',
                 Component: Projects
+            },
+            {
+                path: '/scrollReveal',
+                Component: ScrollReavel
             },
         ]
     },

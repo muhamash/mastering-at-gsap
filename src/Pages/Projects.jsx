@@ -5,37 +5,33 @@ import { useRef } from "react";
 import { projects } from "../assets/data/projectImage";
 import ProjectCard from "../components/pages/projects/projectCard";
 
-gsap.registerPlugin(ScrollTrigger);
-
 const Projects = () => {
   const containerRef = useRef(null);
+  gsap.registerPlugin(ScrollTrigger);
 
-  useGSAP(
-    () => {
-      const cards = gsap.utils.toArray(".hero");
-      
-      cards.forEach((card) => {
-        gsap.fromTo(
-          card,
-          { 
-            height: "50px"
+  useGSAP(() => {
+    const cards = gsap.utils.toArray(".hero");
+
+    cards.forEach((card, i) => {
+      gsap.fromTo(
+        card,
+        { height: "150px", scale: 0.9, opacity: 0.6 },
+        {
+          height: "500px",
+          scale: 1,
+          opacity: 1,
+          ease: "power3.out",
+          duration: 1.2,
+          scrollTrigger: {
+            trigger: card,
+            start: `top+=${i * 200} 70%`, 
+            end: "top 20%",
+            scrub: true,
           },
-          {
-            height: "500px",
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: card,
-              start: "top 75%",
-              end: "top 25%",
-              scrub: true,
-              refreshPriority: -1,
-            },
-          }
-        );
-      });
-    },
-    { scope: containerRef }
-  );
+        }
+      );
+    });
+  }, { scope: containerRef });
 
   return (
     <div ref={containerRef} className="lg:p-4 p-2 mb-[100vh]">
@@ -49,7 +45,7 @@ const Projects = () => {
         {projects.map((elem, idx) => (
           <div
             key={idx}
-            className="hero w-full h-[50px] mb-4 flex lg:flex-row flex-col lg:gap-4 gap-2 overflow-hidden"
+            className="hero w-full h-[50px] mb-4 flex lg:flex-row flex-col lg:gap-4 gap-2 overflow-hidden origin-bottom"
           >
             <ProjectCard image={elem} />
           </div>
