@@ -1,8 +1,8 @@
- 
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { scrollReveal } from "../assets/data/scrollReveal";
+
 
 export default function ScrollReveal() {
   gsap.registerPlugin(ScrollTrigger);
@@ -20,8 +20,8 @@ export default function ScrollReveal() {
           ease: "power2.out",
           scrollTrigger: {
             trigger: img,
-            start: "top 80%", // when img top hits 80% viewport
-            end: "top 20%",   // fully animate by the time it hits 20%
+            start: "top 80%", 
+            end: "top 20%",  
             scrub: true,
           },
         }
